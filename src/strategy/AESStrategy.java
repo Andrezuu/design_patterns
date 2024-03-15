@@ -1,5 +1,7 @@
 package strategy;
 
+import java.util.Base64;
+
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -8,28 +10,34 @@ public class AESStrategy implements EncryptionStrategy {
     private SecretKey secretKey;
 
     @Override
-    public void encrypt(String texto) {
+    public String encrypt(String texto) {
         try {
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             byte[] textoBytes = texto.getBytes();
             byte[] bytesEncriptados = cipher.doFinal(textoBytes);
-            System.out.println("Texto encriptado" + new String(bytesEncriptados));
+            String textoEncriptado = Base64.getEncoder().encodeToString(bytesEncriptados);
+            System.out.println("Texto encriptado " + textoEncriptado);
+            return textoEncriptado;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
     }
 
     @Override
-    public void decrypt(String texto) {
+    public String decrypt(String texto) {
         try {
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            byte[] textoBytes = texto.getBytes();
+            byte[] textoBytes = Base64.getDecoder().decode(texto);
             byte[] bytesDecriptados = cipher.doFinal(textoBytes);
-            System.out.println("Texto decriptado" + new String(bytesDecriptados));
+            String textoDecriptado = new String(bytesDecriptados);
+            System.out.println("Texto decriptado " + textoDecriptado);
+            return textoDecriptado;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
     }
 
@@ -48,8 +56,8 @@ public class AESStrategy implements EncryptionStrategy {
             keyGen.init(128);
             return keyGen.generateKey();
         } catch (Exception e) {
-           e.printStackTrace();
-           return null;
+            e.printStackTrace();
+            return null;
         }
 
     }

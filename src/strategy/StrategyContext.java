@@ -8,13 +8,13 @@ public class StrategyContext implements EncryptionStrategy {
     }
 
     @Override
-    public void encrypt(String texto) {
-        strategy.encrypt(texto);
+    public String encrypt(String texto) {
+        return strategy.encrypt(texto);
     }
 
     @Override
-    public void decrypt(String texto) {
-        strategy.decrypt(texto);
+    public String decrypt(String texto) {
+        return strategy.decrypt(texto);
     }
 
     @Override

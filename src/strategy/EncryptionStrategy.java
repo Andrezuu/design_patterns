@@ -1,7 +1,7 @@
 package strategy;
 
 public interface EncryptionStrategy {
-    void encrypt(String texto);
-    void decrypt(String texto);
+    String encrypt(String texto);
+    String decrypt(String texto);
     void init(Object secretKey);
 }

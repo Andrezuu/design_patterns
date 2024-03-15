@@ -5,6 +5,7 @@ import javax.crypto.SecretKey;
 public class Main {
     public static void main(String[] args) {
         StrategyContext contexto = new StrategyContext();
+        String texto = "Texto de ejemplowo";
 
         // Generando key para AES
         AESStrategy AESStrategy = new AESStrategy();
@@ -14,12 +15,20 @@ public class Main {
         AESStrategy.init(AESKey);
         contexto.setStrategy(AESStrategy);
 
-        // Ejempo de encriptacion y decriptacion
-        String texto = "Texto de ejemplowo";
-        System.out.println("Texto original:" + texto);
-        contexto.encrypt(texto);
-        System.out.println("Texto secretowo???" + texto);
-        contexto.decrypt(texto);
+        // Ejempo de encriptacion y decriptacion con AES
+        System.out.println("--------------------- \nEjemplo con AES");
+        System.out.println("Texto original: " + texto);
+        String textoEncriptado = contexto.encrypt(texto);
+        contexto.decrypt(textoEncriptado);
+
+        // Ejemplo de encriptacion y decriptacion con Cesar
+        contexto.setStrategy(new CesarStrategy());
+        contexto.init(9);
+        System.out.println("--------------------- \nEjemplo con Cesar, con un displace de 9");
+        System.out.println("Texto original: " + texto);
+        textoEncriptado = contexto.encrypt(texto);
+        contexto.decrypt(textoEncriptado);
+
     }
 
 }
